@@ -18,6 +18,13 @@ class YoutubeLinkData(metaclass=ABCMeta):
     def __str__(self):
         pass
 
+    def youtube_url(self):
+        u = self.url
+        sh = self.start_hour
+        sm = self.start_min
+        ss = self.start_sec
+        return f"{u}&t={sh}h{sm}m{ss}s"
+
 
 class YoutubeLinkData4Wiki(YoutubeLinkData):
     def __str__(self):
@@ -25,8 +32,7 @@ class YoutubeLinkData4Wiki(YoutubeLinkData):
         sh = self.start_hour
         sm = self.start_min
         ss = self.start_sec
-        u = self.url
-        return f"[[{t}({sh:02}:{sm:02}:{ss:02})>>{u}&t={sh}h{sm}m{ss}s]]"
+        return f"[[{t}({sh:02}:{sm:02}:{ss:02})>>{self.youtube_url()}]]"
 
 
 def save(output_txt_file_path: Path, output: Iterable):
@@ -62,7 +68,8 @@ def main():
     # wiki用のリンク作成
     youtube_links_for_wiki = create_youtube_link(json_file_path, YoutubeLinkData4Wiki)
     file_stem = json_file_path.stem
-    output_txt_for_wiki_file_path = Path(f"{json_file_path.parent}{os.sep}{file_stem}4wiki.txt")
+    output_txt_for_wiki_file_path = Path(f"output{os.sep}{file_stem}4wiki.txt")
+    output_txt_for_wiki_file_path.parent.mkdir(exist_ok=True, parents=True)
     save(output_txt_for_wiki_file_path, youtube_links_for_wiki)
 
 

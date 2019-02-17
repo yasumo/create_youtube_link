@@ -12,7 +12,7 @@ osora_subaru_cough.json
 
 のjsonを作成後
 
-python create_youtube_link.py osora_subaru_cough.json
+python create_youtube_link.py input\osora_subaru_cough.json
 
 をすると
 
