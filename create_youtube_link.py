@@ -1,5 +1,5 @@
 from typing import Iterable
-import json
+import hjson
 from pathlib import Path
 import sys
 import os
@@ -47,7 +47,7 @@ def create_youtube_link(json_file_path: Path, clazz):
     if not json_file_path.exists():
         raise Exception("ファイルが無いです")
     with open(json_file_path.as_posix(), 'r', encoding="utf-8") as json_file:
-        json_data = json.load(json_file)
+        json_data = hjson.load(json_file)
     for data in json_data["data"]:
         title = data["title"]
         url = data["url"]
